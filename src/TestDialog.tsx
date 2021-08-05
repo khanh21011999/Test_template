@@ -1,144 +1,120 @@
-import { Dialog, View, Text } from "react-native-ui-lib";
-import React, { useState } from 'react'
-import { Button, ColorPropType, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import React from "react";
+import { useState } from "react";
+import { Button, View, ViewStyle, Text, TextStyle } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import Svg, { Path } from "react-native-svg";
-import Icon from "react-native-vector-icons/Ionicons"
-import { spacing } from "./spacing";
-function Check() {
-    return (
-        <Svg
-            height={50}
-            viewBox="0 -46 417.813 417"
-            width={70}
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <Path
-                d="M159.988 318.582c-3.988 4.012-9.43 6.25-15.082 6.25s-11.094-2.238-15.082-6.25L9.375 198.113c-12.5-12.5-12.5-32.77 0-45.246l15.082-15.086c12.504-12.5 32.75-12.5 45.25 0l75.2 75.203L348.104 9.781c12.504-12.5 32.77-12.5 45.25 0l15.082 15.086c12.5 12.5 12.5 32.766 0 45.246zm0 0"
-                fill="#0053ab"
-            />
-        </Svg>
-    )
-}
-
+import { Dialog } from "./dialogSample";
+import Entypo from "react-native-vector-icons/Entypo";
+import { TouchableOpacity } from "react-native";
 const DIALOG: ViewStyle = {
-    height: 300,
-    width: 350,
-    borderRadius: 7,
-    backgroundColor: Colors.white,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 6,
-    },
-    shadowOpacity: 0.39,
-    shadowRadiurs: 8.30,
-    elevation: 13,
-}
-
-const TEXTSTYLE: ViewStyle = {
-    marginBottom: spacing[1],
-    fontWeight: 'bold',
-    marginTop: spacing[8],
-    top: -20
-}
-const SVGSTYLE: ViewStyle = {
-    width: 50,
-    height: 50,
-}
-const BUTTONSTYLE: ViewStyle = {
-    backgroundColor: '#0053ab',
-    width: 150,
-    height: 30,
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center'
-
-}
-const ICONSTYLE: ViewStyle = {
-    left: 140
-}
-const VIEW: ViewStyle={
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-}
-
+  borderRadius: 7,
+};
+const ACTIVITY_TEXT_STYLE: TextStyle = {
+  fontWeight: "bold",
+  fontSize: 25,
+};
+const COMPONET_STYLE: ViewStyle = {
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  marginBottom: 10,
+};
+const COMPONENT_TEXT_STYLE: TextStyle = {
+  fontWeight: "bold",
+  fontSize: 14,
+};
+const EMOTION_BOARD: ViewStyle = {
+  width: "100%",
+  height: "50%",
+  backgroundColor: "#F3F3F3",
+  borderRadius: 5,
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+};
+const EMOTION_ICON: ViewStyle = {
+  margin: 30,
+};
 function DialogTesting() {
-    const [showDialog, setShowDialog] = useState(false)
-    const HeaderDialog = () => {
-        return (
-            <View style={VIEW}>
-                <View style={ICONSTYLE}>
-
-                    <Icon name="close-outline" size={30} onPress={() => {
-                        setShowDialog(false)
-                    }} />
-                </View>
-                <Text
-                    style={{
-
-                        fontWeight: 'bold',
-                        fontSize: 40,
-                        top: -20,
-                        color: Colors.black
-                    }}
-                >Success!</Text>
-                <Check
-                style={SVGSTYLE}
-                />
-            </View>
-        )
-    }
-
-    const ChildrenDialog = () => {
-        return (
-            <View style={VIEW}>
-                <Text style={TEXTSTYLE}>Your Request Has Been Sent</Text>
-                <Text style={{ top: -20, fontSize:11 }}>Additional instructions about appointment can go here</Text>
-                <TouchableOpacity
-                    onPress={() => {
-                        setShowDialog(false)
-                    }}
-                    style={BUTTONSTYLE}
-                >
-                    <Text style={{ fontWeight: 'bold', color: 'white' }}>My appointments</Text>
-                </TouchableOpacity>
-
-            </View>
-        )
-    }
-    function DialogShow(showDialog) {
-        return (
-            <View flex style={VIEW}>
-
-                <Dialog
-                    containerStyle={DIALOG}
-                    visible={showDialog}
-                    overlayBackgroundColor='#f0f0f0'
-                    onDismiss={() => { setShowDialog(false) }}
-                >
-                    {HeaderDialog()}
-                    {ChildrenDialog()}
-                </Dialog>
-            </View>
-
-        )
-    }
-    return (
-        <View>
-            <Button
-                title='Click me to show dialog'
-                onPress={() => { setShowDialog(true) }}
-            >
-            </Button>
-
-            {DialogShow(showDialog)}
-
+  const [show, setShow] = useState(false);
+  return (
+    <View>
+      <Button
+        title="click"
+        onPress={() => {
+          setShow(true);
+        }}
+      >
+        <Text>Show dialog</Text>
+      </Button>
+      <Dialog
+        visible={show}
+        title="Record New Progress"
+        style={DIALOG}
+        onClose={() => {
+          setShow(false);
+        }}
+      >
+        <View style={{ alignItems: "center", marginBottom: 20 }}>
+          <Text>Activity :</Text>
+          <Text style={ACTIVITY_TEXT_STYLE}>Take the stairs</Text>
         </View>
-    )
+        <View style={COMPONET_STYLE}>
+          <Text style={COMPONENT_TEXT_STYLE}>
+            How many times did you do this activity?
+          </Text>
+          <View
+            style={{
+              backgroundColor: "#F3F3F3",
+              marginTop: 5,
+              borderRadius: 5,
+            }}
+          >
+            <TextInput
+              placeholder="1"
+              style={{
+                height: 40,
+                width: 250,
+                padding: 10,
+              }}
+            />
+          </View>
+        </View>
+        <View style={COMPONET_STYLE}>
+          <Text style={COMPONENT_TEXT_STYLE}>
+            How did you do overall for this activity?
+          </Text>
+          <View style={EMOTION_BOARD}>
+            {Emotion("emoji-sad", "grey")}
+            {Emotion("emoji-neutral", "grey")}
+            {Emotion("emoji-happy", "grey")}
+          </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#294FA5",
+              width: "100%",
+              height: 30,
+              marginTop: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 5,
+            }}
+          >
+            <Text style={{ color: "white", fontWeight: "bold" }}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      </Dialog>
+    </View>
+  );
+
+  function Emotion(name, color) {
+    return (
+      <TouchableOpacity>
+        <View style={EMOTION_ICON}>
+          <Entypo name={name} size={35} color={color} />
+        </View>
+      </TouchableOpacity>
+    );
+  }
 }
-export default DialogTesting
+export default DialogTesting;
